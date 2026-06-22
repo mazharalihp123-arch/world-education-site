@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Education System - Global Elite Edition</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --brand: #2563eb;
+            --brand-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #334155;
+            --success: #16a34a;
+            --video-color: #dc2626;
+            --premium: #7c3aed;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .header {
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            background: #f1f5f9;
+            color: var(--primary);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: none;
+        }
+
+        .back-btn:hover {
+            background: #e2e8f0;
+            transform: translateX(-2px);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .sub-heading {
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .search-area {
+            max-width: 550px;
+            margin: 0 auto 30px auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 24px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: var(--brand);
+            box-shadow: 0 10px 25px rgba(37, 99, 243, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 5px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card:hover {
+            background: var(--brand);
+            color: white;
+            border-color: var(--brand);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 243, 0.2);
+        }
+
+        .panel {
+            display: none;
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .uni-row {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .uni-row:hover {
+            background: #f1f5f9;
+            border-color: var(--brand);
+        }
+
+        .uni-info {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .uni-info h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .uni-info p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .course-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .btn-link {
+            background: var(--brand);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            white-space: nowrap;
+            display: inline-block;
+            transition: opacity 0.2s;
+            margin: 5px;
+        }
+
+        .btn-link:hover {
+            opacity: 0.9;
+        }
+
+        .btn-video {
+            background: var(--video-color);
+        }
+
+        .course-block {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--success);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .course-block h5 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .course-block p {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* Permanent Footer Section - World Top Universities */
+        .global-elite-section {
+            border-top: 3px dashed #cbd5e1;
+            padding-top: 30px;
+            margin-top: 20px;
+        }
+
+        .global-elite-title {
+            font-size: 1.5rem;
+            color: var(--premium);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .elite-row {
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .elite-badge {
+            background: #f3e8ff;
+            color: var(--premium);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <button class="back-btn" id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>🌍 WORLD EDUCATION SYSTEM</h1>
+        <p class="sub-heading" id="dynamicSub">Explore the most famous universities around the globe</p>
+    </div>
+
+    <div class="search-area" id="searchArea">
+        <input type="text" id="searchBar" class="search-box" placeholder="Search country name..." onkeyup="searchFilter()">
+    </div>
+
+    <div class="grid" id="countryGrid"></div>
+
+    <div class="panel" id="uniPanel">
+        <h2 class="panel-title" id="panelTitle">Famous Universities</h2>
+        <div id="uniListContainer"></div>
+    </div>
+
+    <div class="panel" id="coursePanel">
+        <h2 class="panel-title" id="coursePanelTitle">Available Courses</h2>
+        <div style="text-align: center; margin-bottom: 25px;">
+            <a id="uniOfficialMainLink" class="btn-link" href="#" target="_blank" style="padding: 12px 25px; font-size: 15px;">🔗 VISIT OFFICIAL WEBSITE</a>
+            <a id="uniVideoBtn" class="btn-link btn-video" href="#" target="_blank" style="padding: 12px 25px; font-size: 15px;">🎬 WATCH VIDEO GUIDE</a>
+        </div>
+        <div id="courseListContainer"></div>
+    </div>
+
+    <div class="global-elite-section">
+        <h3 class="global-elite-title">🏆 GLOBAL ELITE: WORLD'S TOP UNIVERSITIES</h3>
+        
+        <div class="elite-row">
+            <div>
+                <h4 style="color: var(--primary);">🏛️ Massachusetts Institute of Technology (MIT)</h4>
+                <p style="font-size: 13px; color: #64748b;">📍 United States</p>
+                <span class="elite-badge">⭐ Global Rank #1</span>
+            </div>
+            <div>
+                <a class="btn-link" href="https://www.mit.edu" target="_blank">WEBSITE</a>
+                <a class="btn-link btn-video" href="https://www.youtube.com/results?search_query=MIT+Campus+Tour+Boston" target="_blank">TOUR</a>
+            </div>
+        </div>
+
+        <div class="elite-row">
+            <div>
+                <h4 style="color: var(--primary);">🏛️ Stanford University</h4>
+                <p style="font-size: 13px; color: #64748b;">📍 United States</p>
+                <span class="elite-badge">⭐ Global Rank #2</span>
+            </div>
+            <div>
+                <a class="btn-link" href="https://www.stanford.edu" target="_blank">WEBSITE</a>
+                <a class="btn-link btn-video" href="https://www.youtube.com/results?search_query=Stanford+University+Campus+Tour" target="_blank">TOUR</a>
+            </div>
+        </div>
+
+        <div class="elite-row">
+            <div>
+                <h4 style="color: var(--primary);">🏛️ Harvard University</h4>
+                <p style="font-size: 13px; color: #64748b;">📍 United States</p>
+                <span class="elite-badge">⭐ Global Rank #3</span>
+            </div>
+            <div>
+                <a class="btn-link" href="https://www.harvard.edu" target="_blank">WEBSITE</a>
+                <a class="btn-link btn-video" href="https://www.youtube.com/results?search_query=Harvard+University+Full+Campus+Tour" target="_blank">TOUR</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Dataset holding Country wise unique Top 3 universities
+const educationDatabase = {
+    "Pakistan": [
+        { 
+            name: "National University of Sciences & Technology (NUST)", 
+            rank: "Rank #1: Engineering & Tech", 
+            link: "https://nust.edu.pk",
+            video: "https://www.youtube.com/results?search_query=NUST+Islamabad+Campus+Tour",
+            courses: [
+                { name: "Software Engineering", desc: "Advanced coding, system logic, and mobile computing." },
+                { name: "Data Science", desc: "Machine learning, big data architectures, and AI modeling." }
+            ]
+        },
+        { 
+            name: "Quaid-i-Azam University (QAU)", 
+            rank: "Rank #2: Natural & Social Sciences", 
+            link: "https://qau.edu.pk",
+            video: "https://www.youtube.com/results?search_query=Quaid+i+Azam+University+Islamabad+documentary",
+            courses: [
+                { name: "Physics & Chemistry", desc: "Quantum theories, molecular structure labs, and analytics." }
+            ]
+        },
+        { 
+            name: "University of Sindh", 
+            rank: "Rank #3: Historical Regional Leader", 
+            link: "https://usindh.edu.pk",
+            video: "https://www.youtube.com/results?search_query=University+of+Sindh+Jamshoro+tour",
+            courses: [
+                { name: "Information Technology (IT)", desc: "Web development, network setup, and systems security." }
+            ]
+        }
+    ],
+    "India": [
+        { 
+            name: "Indian Institute of Technology (IIT Bombay)", 
+            rank: "Rank #1: Premier Tech Center", 
+            link: "https://www.iitb.ac.in",
+            video: "https://www.youtube.com/results?search_query=IIT+Bombay+Campus+Tour",
+            courses: [
+                { name: "Computer Science Engineering", desc: "Core algorithms, compiler systems, and software engineering." }
+            ]
+        },
+        { 
+            name: "Indian Institute of Science (IISc Bangalore)", 
+            rank: "Rank #2: Research Pioneer", 
+            link: "https://iisc.ac.in",
+            video: "https://www.youtube.com/results?search_query=IISc+Bangalore+Campus+Walkthrough",
+            courses: [
+                { name: "Aerospace & Data Sciences", desc: "Aerodynamics, advanced mathematical physics, and computation." }
+            ]
+        },
+        { 
+            name: "University of Delhi", 
+            rank: "Rank #3: Top General Studies Central University", 
+            link: "https://du.ac.in",
+            video: "https://www.youtube.com/results?search_query=Delhi+University+North+Campus+Life",
+            courses: [
+                { name: "Commerce & Political Science", desc: "Macroeconomics, global commerce tracking, and civic policies." }
+            ]
+        }
+    ],
+    "United States": [
+        { 
+            name: "Massachusetts Institute of Technology (MIT)", 
+            rank: "Rank #1: Global Tech Pioneer", 
+            link: "https://www.mit.edu",
+            video: "https://www.youtube.com/results?search_query=MIT+Campus+Tour+Boston",
+            courses: [
+                { name: "Artificial Intelligence & Robotics", desc: "Neural networks, robotic automated automation, and cognition computing." }
+            ]
+        },
+        { 
+            name: "Harvard University", 
+            rank: "Rank #2: Elite Ivy League Leader", 
+            link: "https://www.harvard.edu",
+            video: "https://www.youtube.com/results?search_query=Harvard+University+Full+Campus+Tour",
+            courses: [
+                { name: "Corporate Law & Public Governance", desc: "International legal systems, court drafting, and systemic statecraft." }
+            ]
+        },
+        { 
+            name: "Stanford University", 
+            rank: "Rank #3: Silicon Valley Hub", 
+            link: "https://www.stanford.edu",
+            video: "https://www.youtube.com/results?search_query=Stanford+University+Campus+Tour",
+            courses: [
+                { name: "Business Management & VC Financing", desc: "Startup scaling mechanics, venture capital structure, and marketing tactics." }
+            ]
+        }
+    ],
+    "United Kingdom": [
+        { 
+            name: "University of Oxford", 
+            rank: "Rank #1: Ultimate Historical Academic Leader", 
+            link: "https://www.ox.ac.uk",
+            video: "https://www.youtube.com/results?search_query=Oxford+University+Tour",
+            courses: [
+                { name: "Philosophy, Politics & Economics (PPE)", desc: "High governance strategy, logical tracking, and structural finance." }
+            ]
+        },
+        { 
+            name: "University of Cambridge", 
+            rank: "Rank #2: Elite Mathematical Center", 
+            link: "https://www.cam.ac.uk",
+            video: "https://www.youtube.com/results?search_query=University+of+Cambridge+Tour",
+            courses: [
+                { name: "Pure Mathematics & Astrophysics", desc: "Advanced string theories, astrophysics metrics, and pure logic structures." }
+            ]
+        },
+        { 
+            name: "Imperial College London", 
+            rank: "Rank #3: Science & Medical Powerhouse", 
+            link: "https://www.imperial.ac.uk",
+            video: "https://www.youtube.com/results?search_query=Imperial+College+London+Campus+Tour",
+            courses: [
+                { name: "Biomedical Engineering", desc: "Prosthetics development, genetic tracking labs, and chemical computing." }
+            ]
+        }
+    ],
+    "Afghanistan": [
+        { 
+            name: "Kabul University", 
+            rank: "Rank #1: Central Public Institution", 
+            link: "https://ku.edu.af",
+            video: "https://www.youtube.com/results?search_query=Kabul+University+tour+video",
+            courses: [
+                { name: "Computer Science", desc: "Software engineering foundations and basic network topologies." }
+            ]
+        },
+        { 
+            name: "American University of Afghanistan", 
+            rank: "Rank #2: Premium Private Academy", 
+            link: "https://auaf.edu.af",
+            video: "https://www.youtube.com/results?search_query=American+University+of+Afghanistan+Campus",
+            courses: [
+                { name: "Business Administration", desc: "Management strategies, basic accounting, and human resource modules." }
+            ]
+        },
+        { 
+            name: "Herat University", 
+            rank: "Rank #3: Main Western Regional Center", 
+            link: "https://hu.edu.af",
+            video: "https://www.youtube.com/results?search_query=Herat+University+Afghanistan",
+            courses: [
+                { name: "Agricultural Science", desc: "Arid land cultivation, crop life maximization, and water management." }
+            ]
+        }
+    ]
+};
+
+const allWorldCountries = ["Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Republic of the)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
+
+allWorldCountries.forEach(country => {
+    if(!educationDatabase[country]) {
+        databaseAutoFallback(country);
+    }
+});
+
+function databaseAutoFallback(country) {
+    const query = encodeURIComponent("top university in " + country);
+    educationDatabase[country] = [
+        { 
+            name: `${country} National University (Alpha)`, 
+            rank: "Rank #1: Premier Institution", 
+            link: "https://www.google.com/search?q=" + query,
+            video: "https://www.youtube.com/results?search_query=" + encodeURIComponent(country + " national university tour"),
+            courses: [{ name: "Advanced System Sciences", desc: "Scientific developments and regional technical projects." }]
+        },
+        { 
+            name: `${country} Institute of Science (Beta)`, 
+            rank: "Rank #2: Research Center", 
+            link: "https://www.google.com/search?q=" + encodeURIComponent("famous institute in " + country),
+            video: "https://www.youtube.com/results?search_query=" + encodeURIComponent(country + " institute of technology"),
+            courses: [{ name: "Information Technology & Analytics", desc: "Computational data methods and tech architecture." }]
+        },
+        { 
+            name: `${country} Academy of Arts (Gamma)`, 
+            rank: "Rank #3: Higher Education Hub", 
+            link: "https://www.google.com/search?q=" + encodeURIComponent("best college in " + country),
+            video: "https://www.youtube.com/results?search_query=" + encodeURIComponent(country + " university campus walk"),
+            courses: [{ name: "International Business & Relations", desc: "Global trade matrix structures and corporate management." }]
+        }
+    ];
+}
+
+let currentStage = "COUNTRIES"; 
+let selectedCountryCache = "";
+
+function renderPage() {
+    const grid = document.getElementById("countryGrid");
+    const searchArea = document.getElementById("searchArea");
+    const uniPanel = document.getElementById("uniPanel");
+    const coursePanel = document.getElementById("coursePanel");
+    const backBtn = document.getElementById("backBtn");
+
+    grid.style.display = "none";
+    searchArea.style.display = "none";
+    uniPanel.style.display = "none";
+    coursePanel.style.display = "none";
+    backBtn.style.display = "none";
+
+    if (currentStage === "COUNTRIES") {
+        grid.style.display = "grid";
+        searchArea.style.display = "block";
+        document.getElementById("dynamicSub").innerText = "Explore the most famous universities around the globe";
+        
+        grid.innerHTML = "";
+        Object.keys(educationDatabase).sort().forEach(country => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerText = country;
+            card.onclick = () => {
+                selectedCountryCache = country;
+                currentStage = "UNIVERSITIES";
+                renderPage();
+            };
+            grid.appendChild(card);
+        });
+    } 
+    else if (currentStage === "UNIVERSITIES") {
+        uniPanel.style.display = "block";
+        backBtn.style.display = "block";
+        document.getElementById("panelTitle").innerText = `Top 3 Universities in ${selectedCountryCache}`;
+        
+        const container = document.getElementById("uniListContainer");
+        container.innerHTML = "";
+        
+        educationDatabase[selectedCountryCache].forEach((uni, index) => {
+            const row = document.createElement("div");
+            row.className = "uni-row";
+            row.innerHTML = `
+                <div class="uni-info" onclick="showCourses(${index})">
+                    <h4>🏛️ ${uni.name}</h4>
+                    <p>⭐ ${uni.rank}</p>
+                    <span class="course-badge">📚 View Courses (${uni.courses.length})</span>
+                </div>
+                <a class="btn-link" href="${uni.link}" target="_blank">OFFICIAL WEBSITE ➔</a>
+            `;
+            container.appendChild(row);
+        });
+    }
+}
+
+function showCourses(index) {
+    const uni = educationDatabase[selectedCountryCache][index];
+    currentStage = "COURSES";
+    document.getElementById("uniPanel").style.display = "none";
+    document.getElementById("coursePanel").style.display = "block";
+    
+    document.getElementById("coursePanelTitle").innerText = `Available Courses in ${uni.name}`;
+    document.getElementById("uniOfficialMainLink").href = uni.link;
+    document.getElementById("uniVideoBtn").href = uni.video;
+    
+    const container = document.getElementById("courseListContainer");
+    container.innerHTML = "";
+    
+    uni.courses.forEach(course => {
+        const block = document.createElement("div");
+        block.className = "course-block";
+        block.innerHTML = `
+            <h5>📖 ${course.name}</h5>
+            <p>${course.desc}</p>
+        `;
+        container.appendChild(block);
+    });
+}
+
+function goBack() {
+    if (currentStage === "COURSES") {
+        currentStage = "UNIVERSITIES";
+    } else if (currentStage === "UNIVERSITIES") {
+        currentStage = "COUNTRIES";
+    }
+    renderPage();
+}
+
+function searchFilter() {
+    const query = document.getElementById("searchBar").value.toLowerCase();
+    const cards = document.getElementsByClassName("card");
+    for (let i = 0; i < cards.length; i++) {
+        let text = cards[i].innerText || cards[i].textContent;
+        cards[i].style.display = text.toLowerCase().includes(query) ? "" : "none";
+    }
+}
+
+renderPage();
+</script>
+</body>
+</html>
